@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sagar Lama — Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue: #111827;
+      --dark: #111827;
+      --light: #f9fafb;
+      --gray: #6b7280;
+      --border: #e5e7eb;
+      --nav-h: 64px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--light);
+      color: var(--dark);
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      height: var(--nav-h);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5%;
+      background: rgba(249,250,251,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      z-index: 100;
+    }
+    .logo { font-family: 'Playfair Display', serif; font-size: 1.25rem; color: var(--dark); text-decoration: none; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      text-decoration: none; font-size: .9rem; font-weight: 500;
+      color: var(--gray); transition: color .2s;
+      padding-bottom: 2px; border-bottom: 2px solid transparent;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--blue); border-color: var(--blue); }
+
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--dark); transition: .3s; border-radius: 2px; }
+
+    /* SECTIONS */
+    section { min-height: 100vh; padding: calc(var(--nav-h) + 60px) 5% 80px; display: flex; align-items: center; }
+
+    /* HOME */
+    #home { background: var(--light); }
+    .home-inner {
+      display: grid; grid-template-columns: 1fr 1fr;
+      align-items: center; gap: 4rem; width: 100%;
+    }
+    .home-text h3 { font-size: 1.2rem; font-weight: 300; color: var(--gray); margin-bottom: .5rem; }
+    .home-text h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      line-height: 1.1; margin-bottom: .4rem;
+    }
+    .home-text h1 span { color: var(--blue); }
+    .home-text h2 { font-size: 1.3rem; font-weight: 400; color: var(--gray); margin-bottom: 2rem; }
+    .btn {
+      display: inline-block; padding: .75rem 1.75rem;
+      background: var(--blue); color: #fff;
+      border: none; border-radius: 6px; font-size: .95rem;
+      font-family: inherit; cursor: pointer; text-decoration: none;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(59,91,255,.35); }
+    .social-links { display: flex; gap: 1rem; margin-top: 1.5rem; }
+    .social-links a {
+      width: 38px; height: 38px; border: 1.5px solid var(--border);
+      border-radius: 50%; display: grid; place-items: center;
+      text-decoration: none; color: var(--gray); font-size: .8rem;
+      transition: border-color .2s, color .2s;
+    }
+    .social-links a:hover { border-color: var(--blue); color: var(--blue); }
+
+    /* Photo placeholder blob */
+    .home-img-wrap { display: flex; justify-content: center; }
+    .avatar-blob {
+      width: clamp(220px, 35vw, 360px);
+      aspect-ratio: 1;
+      background: var(--blue);
+      border-radius: 60% 40% 55% 45% / 50% 55% 45% 50%;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+      animation: morph 8s ease-in-out infinite;
+      flex-direction: column; gap: .5rem;
+    }
+    .avatar-blob .placeholder-text {
+      color: rgba(255,255,255,0.85);
+      font-size: .95rem; font-weight: 500; text-align: center;
+      padding: 1rem;
+    }
+    .avatar-blob .photo-icon { font-size: 3rem; }
+
+   
+
+    @keyframes morph {
+      0%,100% { border-radius: 60% 40% 55% 45% / 50% 55% 45% 50%; }
+      50%      { border-radius: 40% 60% 45% 55% / 55% 45% 55% 45%; }
+    }
+
+    /* SECTION TITLES */
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem; color: var(--blue);
+      text-align: center; margin-bottom: 3rem;
+      position: relative;
+    }
+    .section-title::after {
+      content: ''; display: block; width: 40px; height: 3px;
+      background: var(--blue); margin: .6rem auto 0;
+      border-radius: 2px;
+    }
+
+    /* ABOUT */
+    #about { background: #fff; }
+    .about-inner {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 4rem; align-items: center; width: 100%;
+    }
+
+    /* About photo placeholder */
+    .about-photo-placeholder {
+      background: #e8ecff;
+      border-radius: 12px;
+      aspect-ratio: 3/4;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: .75rem; color: var(--blue);
+      border: 2px dashed var(--blue);
+    }
+    .about-photo-placeholder .icon { font-size: 3rem; }
+    .about-photo-placeholder p { font-size: .9rem; color: var(--gray); text-align: center; padding: 0 1rem; }
+
+    .about-text h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; margin-bottom: 1rem; }
+    .about-text p { color: var(--gray); line-height: 1.8; }
+    .about-wrap { width: 100%; }
+
+    /* SKILLS */
+    #skills { background: var(--light); }
+    .skills-inner { width: 100%; max-width: 600px; margin: 0 auto; }
+    .skill-item { margin-bottom: 1.6rem; }
+    .skill-label { display: flex; justify-content: space-between; font-size: .9rem; font-weight: 500; margin-bottom: .5rem; }
+    .skill-bar { height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; }
+    .skill-fill {
+      height: 100%; background: var(--blue); border-radius: 4px;
+      width: 0; transition: width 1.2s cubic-bezier(.4,0,.2,1);
+    }
+    .skills-note {
+      margin-top: 2rem; text-align: center;
+      color: var(--gray); font-size: .9rem;
+      background: #e8ecff; border-radius: 8px; padding: 1rem;
+    }
+
+    /* WORK */
+    #work { background: #fff; }
+    .work-inner { width: 100%; }
+    .work-empty {
+      border: 2px dashed var(--border);
+      border-radius: 16px;
+      padding: 4rem 2rem;
+      text-align: center;
+      color: var(--gray);
+      }
+      .work-empty .icon { font-size: 3rem; margin-bottom: 1rem; }
+      .work-empty h3 { font-size: 1.2rem; margin-bottom: .5rem; color: var(--dark); }
+      .work-empty p { font-size: .9rem; line-height: 1.7; }
+
+    /* CONTACT */
+      #contact { background: var(--light); }
+      .contact-inner { max-width: 520px; margin: 0 auto; width: 100%; }
+      .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+      .contact-form input,
+      .contact-form textarea {
+      padding: .85rem 1rem;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-family: inherit; font-size: .95rem;
+      background: #fff; color: var(--dark);
+      transition: border-color .2s;
+      outline: none;
+      }
+      .contact-form input:focus, .contact-form textarea:focus { border-color: var(--blue); }
+      .contact-form textarea { resize: vertical; min-height: 140px; }
+      .contact-form .btn { align-self: flex-start; }
+
+      .toast {
+      position: fixed; bottom: 2rem; right: 2rem;
+      background: var(--blue); color: #fff;
+      padding: .8rem 1.4rem; border-radius: 8px;
+      font-size: .9rem; box-shadow: 0 8px 24px rgba(59,91,255,.4);
+      transform: translateY(80px); opacity: 0;
+      transition: .4s; pointer-events: none;
+      }
+      .toast.show { transform: translateY(0); opacity: 1; }
+
+      footer {
+      background: var(--dark); color: #fff;
+      text-align: center; padding: 1.5rem;
+      font-size: .85rem;
+      }
+
+    /* MOBILE */
+      @media (max-width: 768px) {
+      .nav-links { display: none; position: fixed; top: var(--nav-h); left: 0; right: 0; background: var(--light); flex-direction: column; padding: 1.5rem 5%; gap: 1.2rem; border-bottom: 1px solid var(--border); }
+      .nav-links.open { display: flex; }
+      .hamburger { display: flex; }
+      .home-inner, .about-inner { grid-template-columns: 1fr; }
+      .home-img-wrap { order: -1; }
+      section { padding-top: calc(var(--nav-h) + 40px); min-height: auto; }
+      }
+
+    /* fade-in on scroll */
+      .reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s ease, transform .7s ease; }
+      .reveal.visible { opacity: 1; transform: none; }
+      </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+      <a href="#home" class="logo">Sagar Lama</a>
+      <ul class="nav-links" id="navLinks">
+      <li><a href="#home" class="active">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#contact">Contact</a></li>
+      </ul>
+      <button class="hamburger" id="burger" aria-label="Menu">
+      <span></span><span></span><span></span>
+      </button>
+</nav>
+
+<!-- HOME -->
+<section id="home">
+      <div class="home-inner">
+      <div class="home-text reveal">
+      <h3>ようこそ</h3>
+      <h1>私は <span>ラマ</span><br/>サガルです。</h1>
+      <h2>Beginner Web Developer</h2>
+      <a href="#contact" class="btn">Contact Me</a>
+      <div class="social-links">
+      <a href="#" title="LinkedIn">in</a>
+      <a href="#" title="GitHub">⌥</a>
+      </div>
+      </div>
+      <div class="home-img-wrap reveal">
+      
+      <div class="avatar-blob">
+      <img src="images/lama.jpg" style="width:90%;height:90%;object-fit:cover;border-radius:inherit;">
+      </div>
+      </div>
+      </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+      <div class="about-wrap">
+      <h2 class="section-title reveal">About</h2>
+      <div class="about-inner">
+      <div class="about-photo-placeholder reveal">
+      <img src="images/sagar.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:12px;">
+      </div>
+      <div class="about-text reveal">
+      <h3>はじめまして、ラマ サガルです。</h3>
+      <p>ネパール出身で、現在は日本でITエンジニア学科を勉強しています。新しいことを学ぶことが好きで、現在はJava、HTML、CSSを学習しています</p>
+      <br/>
+      <p>プロジェクト制作を通して技術力を高め、将来はIT業界で活躍できるエンジニアになりたいと考えています</p>
+      </div>
+      </div>
+      </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="skills-inner">
+    <h2 class="section-title reveal">Skills</h2>
+    <div class="reveal">
+      
+
+      <div class="skill-item">
+        <div class="skill-label"><span>Java </span><span>学習中</span></div>
+        <div class="skill-bar"><div class="skill-fill" data-w="30"></div></div>
+      </div>
+
+      <div class="skill-item">
+        <div class="skill-label"><span>CSS </span><span>学習中</span></div>
+        <div class="skill-bar"><div class="skill-fill" data-w="35"></div></div>
+      </div>
+
+      <div class="skill-item">
+        <div class="skill-label"><span>HTML </span><span>学習中</span></div>
+        <div class="skill-bar"><div class="skill-fill" data-w="40"></div></div>
+      </div>
+
+      
+    </div>
+  </div>
+</section>
+
+<!-- WORK -->
+<section id="work">
+  <div class="work-inner">
+    <h2 class="section-title reveal">Work</h2>
+    <div class="work-empty reveal">
+      
+      
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <h2 class="section-title reveal">Contact</h2>
+    <div class="contact-form reveal">
+      <input type="text" id="cname" placeholder="Name" />
+      <input type="email" id="cemail" placeholder="Email" />
+      <textarea id="cmessage" placeholder="Your message…"></textarea>
+      <button class="btn" id="sendBtn">Send Message</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>©2026 Sagar Lama. All rights reserved.</p>
+</footer>
+
+<div class="toast" id="toast">Message sent! Thank you </div>
+
+<script>
+  // Hamburger menu
+  const burger = document.getElementById('burger');
+  const navLinks = document.getElementById('navLinks');
+  burger.addEventListener('click', () => navLinks.classList.toggle('open'));
+
+  // Active nav link on scroll
+  const sections = document.querySelectorAll('section');
+  const links = document.querySelectorAll('.nav-links a');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        links.forEach(l => l.classList.remove('active'));
+        const active = document.querySelector('.nav-links a[href="#' + e.target.id + '"]');
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { threshold: 0.45 });
+  sections.forEach(s => observer.observe(s));
+
+  // Reveal on scroll + animate skill bars
+  const reveals = document.querySelectorAll('.reveal');
+  const revealObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        e.target.querySelectorAll('.skill-fill').forEach(bar => {
+          bar.style.width = bar.dataset.w + '%';
+        });
+        revealObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  reveals.forEach(r => revealObs.observe(r));
+
+  // Contact form
+  document.getElementById('sendBtn').addEventListener('click', () => {
+    const n = document.getElementById('cname').value.trim();
+    const e = document.getElementById('cemail').value.trim();
+    const m = document.getElementById('cmessage').value.trim();
+    if (!n || !e || !m) { alert('Please fill in all fields.'); return; }
+    document.getElementById('cname').value = '';
+    document.getElementById('cemail').value = '';
+    document.getElementById('cmessage').value = '';
+    const toast = document.getElementById('toast');
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3500);
+  });
+</script>
+</body>
+</html>
